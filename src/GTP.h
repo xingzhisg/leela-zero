@@ -60,6 +60,7 @@ class AnalyzeTags {
 public:
     AnalyzeTags() = default;
     AnalyzeTags(std::istringstream& cmdstream, const GameState& game);
+    AnalyzeTags(int interval_centis, int who);
 
     void add_move_to_avoid(int color, int vertex, size_t until_move);
     void add_move_to_allow(int color, int vertex, size_t until_move);

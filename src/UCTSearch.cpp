@@ -112,8 +112,9 @@ private:
     bool m_lcb_ratio_exceeded;
 };
 
-UCTSearch::UCTSearch(GameState& g, Network& network)
-    : m_rootstate(g), m_network(network) {
+UCTSearch::UCTSearch(GameState& g, Network& network, const std::function<void(const char*)>& print_analysis)
+    : m_rootstate(g), m_network(network)
+    , m_print_analysis(print_analysis == nullptr ? ([](const char* s) {gtp_printf_raw(s);}) : print_analysis) {
     set_playout_limit(cfg_max_playouts);
     set_visit_limit(cfg_max_visits);
 
@@ -371,12 +372,12 @@ void UCTSearch::output_analysis(const FastState& state, const UCTNode& parent) {
     // Output analysis data in gtp stream
     for (const auto& node : sortable_data) {
         if (i > 0) {
-            gtp_printf_raw(" ");
+            m_print_analysis(" ");
         }
-        gtp_printf_raw(node.get_info_string(i).c_str());
+        m_print_analysis(node.get_info_string(i).c_str());
         i++;
     }
-    gtp_printf_raw("\n");
+    m_print_analysis("\n");
 }
 
 void UCTSearch::tree_stats(const UCTNode& node) {

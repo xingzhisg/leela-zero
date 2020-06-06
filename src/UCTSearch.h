@@ -36,6 +36,7 @@
 #include <memory>
 #include <string>
 #include <tuple>
+#include <functional>
 
 #include "FastBoard.h"
 #include "FastState.h"
@@ -110,7 +111,7 @@ public:
     static constexpr auto UNLIMITED_PLAYOUTS =
         std::numeric_limits<int>::max() / 2;
 
-    UCTSearch(GameState& g, Network& network);
+    UCTSearch(GameState& g, Network& network, const std::function<void(const char*)>& print_analysis = nullptr);
     int think(int color, passflag_t passflag = NORMAL);
     void set_playout_limit(int playouts);
     void set_visit_limit(int visits);
@@ -150,6 +151,8 @@ private:
     std::list<Utils::ThreadGroup> m_delete_futures;
 
     Network& m_network;
+
+    std::function<void(const char*)> m_print_analysis;
 };
 
 class UCTWorker {

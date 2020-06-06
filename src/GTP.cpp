@@ -101,6 +101,12 @@ bool cfg_benchmark;
 bool cfg_cpu_only;
 AnalyzeTags cfg_analyze_tags;
 
+
+AnalyzeTags::AnalyzeTags(int interval_centis, int who)
+: m_interval_centis(interval_centis)
+, m_who(who) 
+{}
+
 /* Parses tags for the lz-analyze GTP command and friends */
 AnalyzeTags::AnalyzeTags(std::istringstream& cmdstream, const GameState& game) {
     std::string tag;
