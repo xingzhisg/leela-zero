@@ -20,6 +20,10 @@ include(GNUInstallDirs)
 project(leelaz)
 add_subdirectory(gtest EXCLUDE_FROM_ALL) # We don't want to install gtest, exclude it from `all`
 
+if(PYTHON)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
+
 # Required Packages
 set(Boost_MIN_VERSION "1.58.0")
 set(Boost_USE_MULTITHREADED ON)
@@ -27,6 +31,7 @@ find_package(Boost 1.58.0 REQUIRED program_options filesystem)
 find_package(Threads REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenCL REQUIRED)
+
 # We need OpenBLAS for now, because we make some specific
 # calls. Ideally we'd use OpenBLAS is possible and fall back to
 # not doing those calls if it's not present.
@@ -160,3 +165,8 @@ SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 SET(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${MAJOR_VERSION}.${MINOR_VERSION}")
 
 INCLUDE(CPack)
+
+if(PYTHON)
+  include_directories(src/)
+  add_subdirectory(python)
+endif()
