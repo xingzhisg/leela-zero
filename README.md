@@ -7,7 +7,7 @@ This forked project aims to add Python3 interface for Leela-Zero.
 
 The GTP interface used by Leela-Zero causes headache for python integration, as it requires stdout / stderr stream handling and parsing. In fact, most GTP commands provided in Leela-Zero are synchoruous function a-likes, such as loadsgf, clear_cache. The only few exceptions are those long blocking commands such as lz-analyze. These functions can have analysis published in the middle of the process through the stdout. 
 
-This fork uses boost.python to build analyzer modules with command function calls.
+This fork uses boost.python to build analyzer modules with command function interface.
 
 # What
 
